@@ -1,5 +1,6 @@
 package com.github.youssfbr.uri2611.repositories;
 
+import com.github.youssfbr.uri2611.dtos.MovieMinDTO;
 import com.github.youssfbr.uri2611.entities.Movie;
 import com.github.youssfbr.uri2611.projections.MovieMinProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,4 +16,9 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
                     "INNER JOIN genres g ON m.id_genres = g.id " +
                     "WHERE g.description = :genreName" )
     List<MovieMinProjection> searchBySql(String genreName);
+
+    @Query( "SELECT new com.github.youssfbr.uri2611.dtos.MovieMinDTO(obj.id, obj.name) "
+            + "FROM Movie obj "
+            + "WHERE obj.genre.description = :genreName")
+    List<MovieMinDTO> searchByJpql(String genreName);
 }

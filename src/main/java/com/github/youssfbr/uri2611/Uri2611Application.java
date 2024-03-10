@@ -1,7 +1,6 @@
 package com.github.youssfbr.uri2611;
 
 import com.github.youssfbr.uri2611.dtos.MovieMinDTO;
-import com.github.youssfbr.uri2611.projections.MovieMinProjection;
 import com.github.youssfbr.uri2611.repositories.MovieRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,12 +29,18 @@ public class Uri2611Application implements CommandLineRunner {
 				.map(MovieMinDTO::new)
 				.toList();
 
+		final List<MovieMinDTO> resultJpql = movieRepository.searchByJpql("Action");
+
 		System.out.println("\n*** SQL *******************");
 		for (MovieMinDTO obj : resultSql) {
 			System.out.println(obj);
 		}
 
-		System.out.println();
+		System.out.println("\n*** JPQL *******************");
+		for (MovieMinDTO obj : resultJpql) {
+			System.out.println(obj);
+		}
 
+		System.out.println();
 	}
 }
